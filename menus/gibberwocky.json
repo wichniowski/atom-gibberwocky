@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle gibberwocky",
+        "command": "gibberwocky:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "gibberwocky",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "gibberwocky:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

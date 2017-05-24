@@ -1,0 +1,19 @@
+{
+  "name": "gibberwocky",
+  "main": "./lib/gibberwocky",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "keywords": [],
+  "activationCommands": {
+    "atom-workspace": "gibberwocky:toggle"
+  },
+  "repository": "https://github.com/atom/gibberwocky",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "acorn": "^4.0.13",
+    "big-js": "^3.1.3"
+  }
+}
