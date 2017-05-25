@@ -1,14 +1,15 @@
 # atom-gibberwocky
 
 Gibberwocky Live Coding Plugin for Atom
-Gibberwocky is developed by @charlieroberts
 
-This is the first working version and will be heavily improved.
+Gibberwocky is a live-coding environment for Ableton Live using WebSocket and a max/msp patch collection. Gibberwocky is based on Gibber and developed by @charlieroberts
+
+***This is the first working version and will be heavily improved.***
 
 ## Installation
 
-- Install Gibberwocky [gibberwocky](https://github.com/charlieroberts/gibberwocky)
-- Clone or download this plugin and install it by changing into the package directory and running "apm link"
+- Install [gibberwocky](https://github.com/charlieroberts/gibberwocky)
+- Clone or download this plugin and install it by changing into the package directory and running "apm install" and "apm link"
 - Restart Atom and add the custom keymap to your keymappings: Atom -> Keymap
 - Hit "alt-shift-enter" or click "Packages -> gibberwocky -> Toggle" to start the session
 

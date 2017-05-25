@@ -1,9 +1,10 @@
 {
   "name": "gibberwocky",
   "main": "./lib/gibberwocky",
-  "version": "0.0.0",
-  "description": "A short description of your package",
-  "keywords": [],
+  "version": "0.0.1",
+  "author": "Johannes Bugiel <hello@devfromabove.io>",
+  "description": "A plugin for live-coding with Ableton Live & Gibberwocky",
+  "keywords": ["Ableton", "gibberwocky", "algorave", "ableton live", "live coding", "max/msp"],
   "activationCommands": {
     "atom-workspace": "gibberwocky:toggle"
   },
