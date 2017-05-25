@@ -102,7 +102,6 @@ let Gibber = {
   },
 
   addSequencingToMethod( obj, methodName, priority, overrideName ) {
-
     if( !obj.sequences ) obj.sequences = {}
     if( overrideName === undefined ) overrideName = methodName
 

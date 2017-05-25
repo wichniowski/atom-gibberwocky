@@ -9,6 +9,7 @@ let Track = {
 		  sequences:{},
       sends:[],
       note( ...args ) {
+        console.log('track args',args);
         args[0] = Gibber.Theory.Note.convertToMIDI( args[0] )
 
         let msg = `${track.id} note ${args.join(' ')}`
@@ -87,7 +88,7 @@ let Track = {
       }
     }
 
-    // Gibber.Environment.codeMarkup.prepareObject( track ) 
+    // Gibber.Environment.codeMarkup.prepareObject( track )
     Gibber.addSequencingToMethod( track, 'note' )
     Gibber.addSequencingToMethod( track, 'cc' )
     Gibber.addSequencingToMethod( track, 'chord' )
