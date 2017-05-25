@@ -1,4 +1,4 @@
-const acorn = require( '../node_modules/acorn/dist/acorn.js' )
+const acorn = require( 'acorn' )
 
 const callDepths = [
   'SCORE',

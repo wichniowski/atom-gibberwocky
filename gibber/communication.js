@@ -8,9 +8,10 @@ let Communication = {
     input:false,
     output:false
   },
-  
-  init( _Gibber ) { 
+
+  init( _Gibber ) {
     Gibber = _Gibber
+    console.log(Gibber);
     this.createWebSocket()
     this.send = this.send.bind( Communication )
   },
@@ -20,7 +21,7 @@ let Communication = {
 
     if ( 'WebSocket' in window ) {
       //Gibber.log( 'Connecting' , this.querystring.host, this.querystring.port )
-      if( this.connectMsg === null ) { 
+      if( this.connectMsg === null ) {
         this.connectMsg = Gibber.log( 'connecting' )
       }else{
         this.connectMsg.innerText += '.'
@@ -29,18 +30,18 @@ let Communication = {
       let host = this.querystring.host || '127.0.0.1',
           port = this.querystring.port || '8081',
           address = "ws://" + host + ":" + port
-      
+
       this.wsocket = new WebSocket( address )
-      
-      this.wsocket.onopen = function(ev) {        
+
+      this.wsocket.onopen = function(ev) {
         //Gibber.log( 'CONNECTED to ' + address )
         Gibber.log('gibberwocky is ready to burble.')
         this.connected = true
-        
+
         Gibber.Live.init()
         // cancel the auto-reconnect task:
         if ( this.connectTask !== undefined ) clearTimeout( this.connectTask )
-          
+
         // apparently this first reply is necessary
         this.wsocket.send( 'update on' )
       }.bind( Communication )
@@ -68,7 +69,7 @@ let Communication = {
     } else {
       post( 'WebSockets are not available in this browser!!!' );
     }
-  
+
   },
 
   callbacks: {},
@@ -77,7 +78,7 @@ let Communication = {
 
   handleMessage( _msg ) {
     let id, key, data, msg
-    
+
     if( _msg.data.charAt( 0 ) === '{' ) {
       data = _msg.data
       key = null
@@ -88,14 +89,14 @@ let Communication = {
       data = _msg.data.substr( 9 ).split(' ')
       for ( let i = 0; i < data.length; i += 2 ) {
         let param_id = data[ i ]
-        let param_value = data[ i+1 ] 
+        let param_value = data[ i+1 ]
 
         if( param_value < 0 ) {
           param_value = 0
         }else if( param_value > 1 ) {
           param_value = 1
         }
-          
+
         Gibber.Environment.codeMarkup.updateWidget( param_id, 1 - param_value )
       }
 
@@ -111,11 +112,11 @@ let Communication = {
         data = msg[ 2 ]
       }
     }
-    
+
     if( id === undefined ) return
 
     if( Communication.debug.input ) {
-      if( id !== undefined ) { 
+      if( id !== undefined ) {
         Gibber.log( 'debug.input:', id, key, data )
       }else{
         Gibber.log( 'debug.input (obj):', JSON.parse( data ) )

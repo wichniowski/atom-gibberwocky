@@ -3,14 +3,14 @@ module.exports = function( Gibber ) {
 let Track = {
   create( spec ) {
 
-    let track = {    
+    let track = {
       id: spec.id,
       spec,
 		  sequences:{},
       sends:[],
       note( ...args ) {
         args[0] = Gibber.Theory.Note.convertToMIDI( args[0] )
-        
+
         let msg = `${track.id} note ${args.join(' ')}`
         Gibber.Communication.send( msg )
       },
@@ -19,11 +19,11 @@ let Track = {
         let msg = `${track.id} note ${args.join(' ')}`
         Gibber.Communication.send( msg )
       },
-      
+
       duration( value ) {
         Gibber.Communication.send( `${track.id} duration ${value}` )
       },
-      
+
       velocity( value ) {
         Gibber.Communication.send( `${track.id} velocity ${value}` )
       },
@@ -45,7 +45,7 @@ let Track = {
 
       chord( chord, velocity='', duration='' ) {
         let msg = []
-        
+
         if( typeof chord  === 'string' ){
           chord = Gibber.Theory.Chord.create( chord ).notes
           chord.forEach( v => track.midinote( v ) )
@@ -87,7 +87,7 @@ let Track = {
       }
     }
 
-    Gibber.Environment.codeMarkup.prepareObject( track ) 
+    // Gibber.Environment.codeMarkup.prepareObject( track ) 
     Gibber.addSequencingToMethod( track, 'note' )
     Gibber.addSequencingToMethod( track, 'cc' )
     Gibber.addSequencingToMethod( track, 'chord' )

@@ -67,10 +67,12 @@ let Scheduler = {
     // TODO: should 4 be a function of the time signature?
     time = time.times( 4 ).plus( this.currentTime )
 
+    console.log(shouldExecute);
     this.queue.push({ seq, time, shouldExecute, priority })
   },
 
   outputMessages() {
+    console.log('message',this.msgs);
     this.msgs.forEach( msg => {
       if( Array.isArray( msg ) ) { // for chords etc.
         msg.forEach( Gibber.Communication.send )
@@ -88,6 +90,7 @@ let Scheduler = {
     if( beat === 1 ) {
       for( let func of Scheduler.functionsToExecute ) {
         try {
+          console.log(func);
           func()
         } catch( e ) {
           console.error( 'error with user submitted code:', e )

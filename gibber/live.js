@@ -9,7 +9,7 @@ let Live = {
   tracks:[],
   master:null,
   returns:[],
-  
+
   handleScene( msg ) {
     Live.id = Communication.querystring.track
 
@@ -21,7 +21,7 @@ let Live = {
   processLOM() {
     Live.tracks = Live.LOM.tracks.map( Live.processTrack )
     Gibber.currentTrack = Live.tracks.find( element => { return element.id === Live.id } )
-    
+
     Live.returns = Live.LOM.returns.map( Live.processTrack )
 
     Gibber.Live.master = Live.processTrack( Live.LOM.master )
@@ -33,12 +33,12 @@ let Live = {
     for( let track of Live.tracks ) {
       Live.tracks[ track.spec.name ] = track
     }
-    
+
     window.tracks  = Live.tracks
     window.master  = Live.master
     window.returns = Live.returns
 
-    Gibber.Environment.lomView.init( Gibber )
+    // Gibber.Environment.lomView.init( Gibber )
   },
 
   processTrack( spec ) {
@@ -46,9 +46,9 @@ let Live = {
     track.devices = []
 
     spec.devices.forEach( (val, idx ) => {
-      Live.processDevice( val, idx, track ) 
+      Live.processDevice( val, idx, track )
     })
-    
+
     if( track.devices[0] !== undefined ) {
       if( track.devices[0].title.includes('gibberwocky') ) {
         track.length = track.devices.length
@@ -62,14 +62,14 @@ let Live = {
   processDevice( device, idx, currentTrack ) {
     let d = currentTrack.devices[ device.name ] = currentTrack.devices[ idx ] = currentTrack[ idx ] = { idx },
         parameterCount = 0
-    
-    //console.log( 'device', device ) 
+
+    //console.log( 'device', device )
     if( device.type === 1 ) currentTrack.instrument = d
 
     d.pickRandomParameter = ()=> {
       let idx = Gibber.Utility.rndi( 0, device.parameters.length - 1 ),
           param = device.parameters[ idx ]
-       
+
       while( param.name === 'Device On' || param.name.indexOf( 'Volume' ) !== -1 ) {
         idx = Gibber.Utility.rndi( 0, device.parameters.length - 1 ),
         param = device.parameters[ idx ]
