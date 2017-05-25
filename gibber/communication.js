@@ -11,7 +11,6 @@ let Communication = {
 
   init( _Gibber ) {
     Gibber = _Gibber
-    console.log(Gibber);
     this.createWebSocket()
     this.send = this.send.bind( Communication )
   },
