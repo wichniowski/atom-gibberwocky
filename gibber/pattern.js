@@ -6,7 +6,7 @@ let PatternProto = Object.create( function(){} )
 
 Object.assign( PatternProto, {
   DNR: -987654321,
-  concat( _pattern ) { this.values = this.values.concat( _pattern.values ) },  
+  concat( _pattern ) { this.values = this.values.concat( _pattern.values ) },
   toString() { return this.values.toString() },
   valueOf() { return this.values },
 
@@ -24,7 +24,7 @@ Object.assign( PatternProto, {
     let args = [ val, 1, idx ] // 1 is phaseModifier
 
     for( let filter of this.filters ) {
-      args = filter( args, this ) 
+      args = filter( args, this )
     }
 
     return args
@@ -54,9 +54,9 @@ let Pattern = function( ...args ) {
   let fnc = function() {
     let len = fnc.getLength(),
         idx, val, args
-    
-    if( len === 1 ) { 
-      idx = 0 
+
+    if( len === 1 ) {
+      idx = 0
     }else{
       idx = fnc.phase > -1 ? Math.floor( fnc.start + (fnc.phase % len ) ) : Math.floor( fnc.end + (fnc.phase % len ) )
     }
@@ -68,7 +68,7 @@ let Pattern = function( ...args ) {
     }else{
       val = fnc.values[ Math.floor( idx % fnc.values.length ) ]
       args = fnc.runFilters( val, idx )
-    
+
       fnc.phase += fnc.stepSize * args[ 1 ]
       val = args[ 0 ]
     }
@@ -90,18 +90,18 @@ let Pattern = function( ...args ) {
     // if pattern has update function, add new value to array
     // values are popped when updated by animation scheduler
     if( fnc.update && fnc.update.value ) fnc.update.value.unshift( val )
-    
+
     if( val === fnc.DNR ) val = null
 
     return val
   }
-   
+
   Object.assign( fnc, {
     start : 0,
     end   : 0,
     phase : 0,
-    values : args, 
-    //values : typeof arguments[0] !== 'string' || arguments.length > 1 ? Array.prototype.slice.call( arguments, 0 ) : arguments[0].split(''),    
+    values : args,
+    //values : typeof arguments[0] !== 'string' || arguments.length > 1 ? Array.prototype.slice.call( arguments, 0 ) : arguments[0].split(''),
     original : null,
     storage : [],
     stepSize : 1,
@@ -111,7 +111,7 @@ let Pattern = function( ...args ) {
 
     range() {
       let start, end
-      
+
       if( Array.isArray( arguments[0] ) ) {
         start = arguments[0][0]
         end   = arguments[0][1]
@@ -119,7 +119,7 @@ let Pattern = function( ...args ) {
         start = arguments[0]
         end   = arguments[1]
       }
-      
+
       if( start < end ) {
         fnc.start = start
         fnc.end = end
@@ -132,43 +132,43 @@ let Pattern = function( ...args ) {
 
       return fnc
     },
-    
+
     set() {
       let args = Array.isArray( arguments[ 0 ] ) ? arguments[ 0 ] : arguments
-      
+
       fnc.values.length = 0
-      
+
       for( let i = 0; i < args.length; i++ ) {
         fnc.values.push( args[ i ] )
       }
-      
+
       fnc.end = fnc.values.length - 1
-      
+
       // if( fnc.end > fnc.values.length - 1 ) {
       //   fnc.end = fnc.values.length - 1
       // }else if( fnc.end < )
-      
+
       fnc._onchange()
-      
+
       return fnc
     },
-     
-    reverse() { 
-      //fnc.values.reverse(); 
+
+    reverse() {
+      //fnc.values.reverse();
       let array = fnc.values,
           left = null,
           right = null,
           length = array.length,
           temporary;
-          
+
       for ( left = 0, right = length - 1; left < right; left += 1, right -= 1 ) {
         temporary = array[ left ]
         array[ left ] = array[ right ]
         array[ right ] = temporary;
       }
-      
-      fnc._onchange() 
-      
+
+      fnc._onchange()
+
       return fnc
     },
     // humanize: function( randomMin, randomMax ) {
@@ -201,28 +201,28 @@ let Pattern = function( ...args ) {
  //    },
     repeat() {
       let counts = {}
-    
+
       for( let i = 0; i < arguments.length; i +=2 ) {
         counts[ arguments[ i ] ] = {
           phase: 0,
           target: arguments[ i + 1 ]
         }
       }
-      
+
       let repeating = false, repeatValue = null, repeatIndex = null
       let filter = function( args ) {
         let value = args[ 0 ], phaseModifier = args[ 1 ], output = args
-        
+
         //console.log( args, counts )
         if( repeating === false && counts[ value ] ) {
           repeating = true
           repeatValue = value
           repeatIndex = args[2]
         }
-        
+
         if( repeating === true ) {
           if( counts[ repeatValue ].phase !== counts[ repeatValue ].target ) {
-            output[ 0 ] = repeatValue            
+            output[ 0 ] = repeatValue
             output[ 1 ] = 0
             output[ 2 ] = repeatIndex
             //[ val, 1, idx ]
@@ -230,29 +230,29 @@ let Pattern = function( ...args ) {
           }else{
             counts[ repeatValue ].phase = 0
             output[ 1 ] = 1
-            if( value !== repeatValue ) { 
+            if( value !== repeatValue ) {
               repeating = false
             }else{
               counts[ repeatValue ].phase++
             }
           }
         }
-      
+
         return output
       }
-    
+
       fnc.filters.push( filter )
-    
+
       return fnc
     },
-  
+
     reset() { fnc.values = fnc.original.slice( 0 ); fnc._onchange(); return fnc; },
     store() { fnc.storage[ fnc.storage.length ] = fnc.values.slice( 0 ); return fnc; },
 
-    transpose( amt ) { 
-      for( let i = 0; i < fnc.values.length; i++ ) { 
+    transpose( amt ) {
+      for( let i = 0; i < fnc.values.length; i++ ) {
         let val = fnc.values[ i ]
-        
+
         if( Array.isArray( val ) ) {
           for( let j = 0; j < val.length; j++ ) {
             if( typeof val[ j ] === 'number' ) {
@@ -265,20 +265,20 @@ let Pattern = function( ...args ) {
           }
         }
       }
-      
+
       fnc._onchange()
-      
+
       return fnc
     },
 
-    shuffle() { 
+    shuffle() {
       Gibber.Utility.shuffle( fnc.values )
       fnc._onchange()
-      
+
       return fnc
     },
 
-    scale( amt ) { 
+    scale( amt ) {
       fnc.values.map( (val, idx, array) => {
         if( Array.isArray( val ) ) {
           array[ idx ] = val.map( inside  => {
@@ -296,57 +296,57 @@ let Pattern = function( ...args ) {
       })
 
       fnc._onchange()
-      
+
       return fnc
     },
 
     flip() {
       let start = [],
           ordered = null
-    
+
       ordered = fnc.values.filter( function(elem) {
       	let shouldPush = start.indexOf( elem ) === -1
         if( shouldPush ) start.push( elem )
         return shouldPush
       })
-    
+
       ordered = ordered.sort( function( a,b ){ return a - b } )
-    
+
       for( let i = 0; i < fnc.values.length; i++ ) {
         let pos = ordered.indexOf( fnc.values[ i ] )
         fnc.values[ i ] = ordered[ ordered.length - pos - 1 ]
       }
-      
+
       fnc._onchange()
-    
+
   		return fnc
     },
-    
+
     invert() {
       let prime0 = fnc.values[ 0 ]
-      
+
       for( let i = 1; i < fnc.values.length; i++ ) {
         if( typeof fnc.values[ i ] === 'number' ) {
           let inverse = prime0 + (prime0 - fnc.values[ i ])
           fnc.values[ i ] = inverse
         }
       }
-      
+
       fnc._onchange()
-      
+
   		return fnc
     },
-  
+
     switch( to ) {
       if( fnc.storage[ to ] ) {
         fnc.values = fnc.storage[ to ].slice( 0 )
       }
-      
+
       fnc._onchange()
-      
+
       return fnc
     },
-  
+
     rotate( amt ) {
       if( amt > 0 ) {
         while( amt > 0 ) {
@@ -361,37 +361,37 @@ let Pattern = function( ...args ) {
           amt++
         }
       }
-      
+
       fnc._onchange()
-      
+
       return fnc
     }
   })
-  
+
   fnc.retrograde = fnc.reverse.bind( fnc )
-  
+
   fnc.end = fnc.values.length - 1
-  
+
   fnc.original = fnc.values.slice( 0 )
   fnc.storage[ 0 ] = fnc.original.slice( 0 )
-  
+
   fnc.integersOnly = fnc.values.every( function( n ) { return n === +n && n === (n|0); })
-  
+
   let methodNames =  [
     'rotate','switch','invert','reset', 'flip',
     'transpose','reverse','shuffle','scale',
     'store', 'range', 'set'
   ]
-   
+
   for( let key of methodNames ) { Gibber.addSequencingToMethod( fnc, key, 1 ) }
-  
+
   fnc.listeners = {}
   fnc.sequences = {}
 
   // TODO: Gibber.createProxyProperties( fnc, { 'stepSize':0, 'start':0, 'end':0 })
-  
-  fnc.__proto__ = PatternProto 
-  
+
+  fnc.__proto__ = PatternProto
+
   return fnc
 }
 
@@ -399,7 +399,7 @@ Pattern.listeners = {}
 
 Pattern.listeners.range = function( fnc ) {
   //if( !Notation.isRunning ) return
-  
+
   // TODO: don't use Gibber.currentTrack, store the object in the pattern
   var obj = Gibber.currentTrack,
       rangeStart = obj.markup.textMarkers[ fnc.patternName ][ fnc.start ].find(),
@@ -418,11 +418,11 @@ Pattern.listeners.range = function( fnc ) {
   if( fnc.range.mark ) fnc.range.mark.clear()
   //fnc.range.mark = fnc.column.editor.markText( rangeStart.from, rangeEnd.to, { className:'rangeInside' })
   // TODO: Dont use GE.codemirror... how else do I get this? stored in pattern is created?
-  fnc.range.mark = Gibber.Environment.codemirror.markText( rangeStart.from, rangeEnd.to, { className:'pattern-update-range-inside' })
+  // fnc.range.mark = Gibber.Environment.codemirror.markText( rangeStart.from, rangeEnd.to, { className:'pattern-update-range-inside' })
 }
 
 Pattern.listeners.range.init = function() {
-  //$.injectCSS({ 
+  //$.injectCSS({
   //  '.rangeOutside': {
   //    'color':'#666 !important'
   //  },

@@ -97,7 +97,6 @@ let Communication = {
           param_value = 1
         }
 
-        Gibber.Environment.codeMarkup.updateWidget( param_id, 1 - param_value )
       }
 
       return
@@ -133,7 +132,7 @@ let Communication = {
         break;
 
       case 'clr' :
-        Gibber.Environment.clearConsole()
+        // Gibber.Environment.clearConsole()
         break;
 
       case 'bpm' :
@@ -141,7 +140,7 @@ let Communication = {
         break;
 
       case 'err':
-        Gibber.Environment.error( data )
+        // Gibber.Environment.error( data )
         break;
 
       default:

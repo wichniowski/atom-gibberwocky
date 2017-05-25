@@ -88,7 +88,6 @@ let Track = {
       }
     }
 
-    // Gibber.Environment.codeMarkup.prepareObject( track )
     Gibber.addSequencingToMethod( track, 'note' )
     Gibber.addSequencingToMethod( track, 'cc' )
     Gibber.addSequencingToMethod( track, 'chord' )
