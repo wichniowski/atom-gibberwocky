@@ -1,5 +1,6 @@
 {
   "atom-workspace": {
-    "ctrl-alt-o": "gibberwocky:toggle"
+    "ctrl-alt-o": "gibberwocky:toggle",
+    "ctrl-alt-.": "gibberwocky:clear"
   }
 }

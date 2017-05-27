@@ -4,6 +4,10 @@
       {
         "label": "Toggle gibberwocky",
         "command": "gibberwocky:toggle"
+      },
+      {
+        "label": "Clear",
+        "command": "gibberwocky:clear"
       }
     ]
   },
@@ -17,6 +21,10 @@
             {
               "label": "Toggle",
               "command": "gibberwocky:toggle"
+            },
+            {
+              "label": "Clear",
+              "command": "gibberwocky:clear"
             }
           ]
         }
